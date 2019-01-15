@@ -19,7 +19,13 @@ export default {
     effects: {
 
         *queryInitCards(_,sagaEffects){
+
             const { call, put } = sagaEffects;
+
+            yield put({
+                type: 'clearCard'
+            });
+
             const endPointURI = '/test/cardList';
 
             const puzzle = yield call(request,endPointURI);
@@ -57,6 +63,15 @@ export default {
     // },
 
     reducers : {
+
+        clearCard(state){
+
+            return{
+                data : [],
+                counter: 100
+            }
+        },
+
         addNewCard(state,{payload:newCard}){
             const nextCounter = state.counter + 1;
             const newCardWithId = {...newCard , id:nextCounter};
